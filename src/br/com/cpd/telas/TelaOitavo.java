@@ -9,13 +9,42 @@ package br.com.cpd.telas;
  *
  * @author Alysson
  */
+import java.sql.*;
+import br.com.cpd.dal.ModuloConexao;
+import javax.swing.JOptionPane;
+
 public class TelaOitavo extends javax.swing.JFrame {
+
+    Connection conexao = null;
+    PreparedStatement pst = null;
+    ResultSet rs = null;
 
     /**
      * Creates new form TelaOitavo
      */
     public TelaOitavo() {
         initComponents();
+        conexao = ModuloConexao.conector();
+    }
+
+    private void consultar() {
+        String sql ="select *from aluno where idaluno=?";
+        try {
+            pst=conexao.prepareStatement(sql);
+            pst.setString(1,txtMatricula.getText());
+            rs=pst.executeQuery();
+            if (rs.next()) {
+                txtAluno8.setText(rs.getString(2));
+                txtSturma8.setText(rs.getString(3));
+                txtNivel8.setText(rs.getString(4));
+            } else {
+                JOptionPane.showMessageDialog(null,"Aluno não encontrado !");
+            }           
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null,e);
+        }
+
     }
 
     /**
@@ -28,22 +57,23 @@ public class TelaOitavo extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        txtMatricula = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        txtAluno8 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtSturma8 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtNivel8 = new javax.swing.JTextField();
+        btnSelectStudant = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados do Aluno", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Rod", 0, 12))); // NOI18N
 
-        jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
-        jTextField1.setCaretColor(new java.awt.Color(153, 153, 153));
+        txtMatricula.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
+        txtMatricula.setCaretColor(new java.awt.Color(153, 153, 153));
 
         jLabel1.setFont(new java.awt.Font("Rod", 0, 12)); // NOI18N
         jLabel1.setText("Matricula");
@@ -51,20 +81,27 @@ public class TelaOitavo extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Rod", 0, 12)); // NOI18N
         jLabel2.setText("Nome");
 
-        jTextField2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
-        jTextField2.setCaretColor(new java.awt.Color(153, 153, 153));
+        txtAluno8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
+        txtAluno8.setCaretColor(new java.awt.Color(153, 153, 153));
 
         jLabel3.setFont(new java.awt.Font("Rod", 0, 12)); // NOI18N
         jLabel3.setText("Serie/Turma");
 
-        jTextField3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
-        jTextField3.setCaretColor(new java.awt.Color(153, 153, 153));
+        txtSturma8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
+        txtSturma8.setCaretColor(new java.awt.Color(153, 153, 153));
 
         jLabel4.setFont(new java.awt.Font("Rod", 0, 12)); // NOI18N
         jLabel4.setText("Nivel");
 
-        jTextField4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
-        jTextField4.setCaretColor(new java.awt.Color(153, 153, 153));
+        txtNivel8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
+        txtNivel8.setCaretColor(new java.awt.Color(153, 153, 153));
+
+        btnSelectStudant.setText("Selecionar Aluno");
+        btnSelectStudant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelectStudantActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -74,21 +111,23 @@ public class TelaOitavo extends javax.swing.JFrame {
                 .addGap(19, 19, 19)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMatricula, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField3)))
+                        .addComponent(txtSturma8)))
                 .addGap(44, 44, 44)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jTextField2)
+                    .addComponent(txtAluno8)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtNivel8, javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 77, Short.MAX_VALUE))
-                        .addGap(435, 435, 435)))
+                        .addGap(256, 256, 256)
+                        .addComponent(btnSelectStudant, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(48, 48, 48)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -100,20 +139,23 @@ public class TelaOitavo extends javax.swing.JFrame {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1))
+                    .addComponent(txtAluno8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtMatricula))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtSturma8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtNivel8, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(btnSelectStudant, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(11, 11, 11))
         );
 
-        jLabel1.getAccessibleContext().setAccessibleName("Matricula");
         jLabel1.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -133,6 +175,11 @@ public class TelaOitavo extends javax.swing.JFrame {
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSelectStudantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectStudantActionPerformed
+        // Using the method consultar.
+        consultar();
+    }//GEN-LAST:event_btnSelectStudantActionPerformed
 
     /**
      * @param args the command line arguments
@@ -170,14 +217,15 @@ public class TelaOitavo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnSelectStudant;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JTextField txtAluno8;
+    private javax.swing.JTextField txtMatricula;
+    private javax.swing.JTextField txtNivel8;
+    private javax.swing.JTextField txtSturma8;
     // End of variables declaration//GEN-END:variables
 }
