@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
  * @author Alysson
  */
 public class ModuloConexao {
+    
 
     public static Connection conector() {
 
@@ -26,10 +27,19 @@ public class ModuloConexao {
             Class.forName(driver);
             conexao = DriverManager.getConnection(url, user, senha);
             return conexao;
-        } catch (Exception e) {
+        } catch (ClassNotFoundException | SQLException e) {
             JOptionPane.showMessageDialog(null, e);
             return null;
         }
-
+        
+       /** try {
+            Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");
+            String strConect = "jdbc:odbc:c:/Primeirobd.accdb";
+            conexao = DriverManager.getConnection(strConect,"","");
+        } catch (ClassNotFoundException | SQLException e) {
+            JOptionPane.showMessageDialog(null,"erro na conexão" + e);
+        }
+        return conexao;
+        */
     }
 }
