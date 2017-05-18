@@ -14,22 +14,23 @@ import br.com.cpd.dal.ModuloConexao;
  * @author Alysson
  */
 public class TelaSelect extends javax.swing.JFrame {
-    Connection conexao=null;
+
+    Connection conexao = null;
     PreparedStatement pst = null;
-    ResultSet rs= null;
-    
+    ResultSet rs = null;
+
     /**
      * Creates new form TelaSelect
      */
     public TelaSelect() {
         initComponents();
         conexao = ModuloConexao.conector();
-        if (conexao != null){
+        if (conexao != null) {
             lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/cpd/icones/dbok.png")));
-        }else{
-             lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/cpd/icones/dberror.png")));
+        } else {
+            lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/cpd/icones/dberror.png")));
         }
-            
+
     }
 
     /**
@@ -49,7 +50,7 @@ public class TelaSelect extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jToggleButton1 = new javax.swing.JToggleButton();
         lblStatus = new javax.swing.JLabel();
-        jDesktopPane1 = new javax.swing.JDesktopPane();
+        desktop = new javax.swing.JDesktopPane();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -91,14 +92,16 @@ public class TelaSelect extends javax.swing.JFrame {
 
         lblStatus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/cpd/icones/dberror.png"))); // NOI18N
 
-        javax.swing.GroupLayout jDesktopPane1Layout = new javax.swing.GroupLayout(jDesktopPane1);
-        jDesktopPane1.setLayout(jDesktopPane1Layout);
-        jDesktopPane1Layout.setHorizontalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 870, Short.MAX_VALUE)
+        desktop.setPreferredSize(new java.awt.Dimension(867, 532));
+
+        javax.swing.GroupLayout desktopLayout = new javax.swing.GroupLayout(desktop);
+        desktop.setLayout(desktopLayout);
+        desktopLayout.setHorizontalGroup(
+            desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 867, Short.MAX_VALUE)
         );
-        jDesktopPane1Layout.setVerticalGroup(
-            jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        desktopLayout.setVerticalGroup(
+            desktopLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
@@ -115,7 +118,8 @@ public class TelaSelect extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jDesktopPane1)
+                .addComponent(desktop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -158,9 +162,9 @@ public class TelaSelect extends javax.swing.JFrame {
                     .addComponent(lblStatus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jDesktopPane1)
+                .addComponent(desktop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -172,26 +176,25 @@ public class TelaSelect extends javax.swing.JFrame {
         // Aqui eu chamo as telas de cada turma.
         if (RB8ano.isSelected()) {
             TelaOitavo oitavo = new TelaOitavo();
-            oitavo.setVisible(true); 
+            oitavo.setVisible(true);
+
             //this.dispose();
             //JOptionPane.showMessageDialog(null, "Sorry, tela em construção");
-        }
-        else if (RR9ano.isSelected()) {
+        } else if (RR9ano.isSelected()) {
+
+            TelaNono nono = new TelaNono();
+            nono.setVisible(true);
+            desktop.add(nono);
+        } else if (RB12serie.isSelected()) {
             this.dispose();
             JOptionPane.showMessageDialog(null, "Sorry, tela em construção");
-        }
-        else if (RB12serie.isSelected()) {
+        } else if (RB3serie.isSelected()) {
             this.dispose();
             JOptionPane.showMessageDialog(null, "Sorry, tela em construção");
-        }
-        else if (RB3serie.isSelected()) {
-            this.dispose();
-            JOptionPane.showMessageDialog(null, "Sorry, tela em construção");
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "Selecione uma opção");
         }
-            
+
 
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
@@ -236,7 +239,7 @@ public class TelaSelect extends javax.swing.JFrame {
     private javax.swing.JRadioButton RB8ano;
     private javax.swing.JRadioButton RR9ano;
     private javax.swing.ButtonGroup btGrupo;
-    private javax.swing.JDesktopPane jDesktopPane1;
+    private javax.swing.JDesktopPane desktop;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JToggleButton jToggleButton1;
