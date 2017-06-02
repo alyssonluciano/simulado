@@ -14,11 +14,11 @@ import javax.swing.JOptionPane;
  * @author Alysson
  */
 public class TelaNono extends javax.swing.JInternalFrame {
-
+       
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
-
+    String turma = "";
     /**
      * Creates new form TelaNono
      */
@@ -35,7 +35,6 @@ public class TelaNono extends javax.swing.JInternalFrame {
             rs = pst.executeQuery();
             if (rs.next()) {
                 txtAluno9.setText(rs.getString(2));
-
                 txtSturma9.setText(rs.getString(3));
                 txtNivel9.setText(rs.getString(4));
             } else {
@@ -67,6 +66,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         txtNivel9 = new javax.swing.JTextField();
         btnSelectStudant = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
 
         setClosable(true);
         setIconifiable(true);
@@ -152,7 +152,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
                                 .addGap(256, 256, 256))
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(txtNivel9, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -187,18 +187,34 @@ public class TelaNono extends javax.swing.JInternalFrame {
                 .addGap(11, 11, 11))
         );
 
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Displinas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Rod", 0, 12))); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 114, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(351, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(205, Short.MAX_VALUE))
         );
 
         setSize(new java.awt.Dimension(867, 532));
@@ -207,6 +223,8 @@ public class TelaNono extends javax.swing.JInternalFrame {
     private void btnSelectStudantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectStudantActionPerformed
         // Using the method consultar.
         consultar();
+        turma = txtSturma9.getText();
+        System.out.println(turma);
     }//GEN-LAST:event_btnSelectStudantActionPerformed
 
     private void txtAluno9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAluno9ActionPerformed
@@ -220,6 +238,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField txtAluno9;
     private javax.swing.JTextField txtMatricula;
