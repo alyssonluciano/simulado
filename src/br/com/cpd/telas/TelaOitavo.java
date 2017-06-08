@@ -11,6 +11,8 @@ package br.com.cpd.telas;
  */
 import java.sql.*;
 import br.com.cpd.dal.ModuloConexao;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class TelaOitavo extends javax.swing.JFrame {
@@ -28,21 +30,39 @@ public class TelaOitavo extends javax.swing.JFrame {
     }
 
     private void consultar() {
-        String sql ="select *from aluno where idaluno=?";
+        String sql = "select *from aluno where idaluno=?";
         try {
-            pst=conexao.prepareStatement(sql);
-            pst.setString(1,txtMatricula.getText());
-            rs=pst.executeQuery();
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtMatricula.getText());
+            rs = pst.executeQuery();
             if (rs.next()) {
                 txtAluno8.setText(rs.getString(2));
                 txtSturma8.setText(rs.getString(3));
                 txtNivel8.setText(rs.getString(4));
             } else {
-                JOptionPane.showMessageDialog(null,"Aluno não encontrado !");
-            }           
-            
+                JOptionPane.showMessageDialog(null, "Aluno não encontrado !");
+            }
+
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null,e);
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+    }
+
+    public void populaJCombobox() {
+        String sql = "select discnome from disciplina where serie = 9";
+
+        try {
+            pst = conexao.prepareStatement(sql);
+            rs = pst.executeQuery();
+
+            while (rs.next()) {
+                cmbDisciplina.addItem(rs.getString("discnome"));
+                cmbDisciplina2.addItem(rs.getString("discnome"));
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(TelaOitavo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -66,6 +86,8 @@ public class TelaOitavo extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtNivel8 = new javax.swing.JTextField();
         btnSelectStudant = new javax.swing.JButton();
+        cmbDisciplina = new javax.swing.JComboBox<>();
+        cmbDisciplina2 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -158,18 +180,34 @@ public class TelaOitavo extends javax.swing.JFrame {
 
         jLabel1.getAccessibleContext().setAccessibleDescription("");
 
+        cmbDisciplina.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbDisciplinaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cmbDisciplina, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(cmbDisciplina2, 0, 216, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(280, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(cmbDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cmbDisciplina2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(425, Short.MAX_VALUE))
         );
 
         pack();
@@ -179,7 +217,12 @@ public class TelaOitavo extends javax.swing.JFrame {
     private void btnSelectStudantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectStudantActionPerformed
         // Using the method consultar.
         consultar();
+        populaJCombobox();
     }//GEN-LAST:event_btnSelectStudantActionPerformed
+
+    private void cmbDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDisciplinaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbDisciplinaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -218,6 +261,8 @@ public class TelaOitavo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSelectStudant;
+    private javax.swing.JComboBox<String> cmbDisciplina;
+    private javax.swing.JComboBox<String> cmbDisciplina2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
