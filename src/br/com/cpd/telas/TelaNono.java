@@ -55,13 +55,20 @@ public class TelaNono extends javax.swing.JInternalFrame {
         try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtSturma9.getText());
-            rs=pst.executeQuery();
+            rs = pst.executeQuery();
             //carregando consulta na tebela com a bibliotecars2xml
             tblDisciplinas.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
 
+    }
+
+    // metodo para carregar valores da tabela nas caixas de texto
+    public void setar_campos() {
+        int setar = tblDisciplinas.getSelectedRow();
+        txtDisciplina.setText(tblDisciplinas.getModel().getValueAt(setar, 0).toString());
+        txtQuestoes.setText(tblDisciplinas.getModel().getValueAt(setar, 1).toString());
     }
 
     /**
@@ -88,8 +95,8 @@ public class TelaNono extends javax.swing.JInternalFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblDisciplinas = new javax.swing.JTable();
         txtAcertos = new javax.swing.JTextField();
-        txtDisciplina1 = new javax.swing.JTextField();
-        txtQuestoes1 = new javax.swing.JTextField();
+        txtDisciplina = new javax.swing.JTextField();
+        txtQuestoes = new javax.swing.JTextField();
         txtNota = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -241,6 +248,11 @@ public class TelaNono extends javax.swing.JInternalFrame {
                 "Disciplina", "Quantidade de Questões"
             }
         ));
+        tblDisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblDisciplinasMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tblDisciplinas);
 
         txtAcertos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -249,17 +261,17 @@ public class TelaNono extends javax.swing.JInternalFrame {
         txtAcertos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
         txtAcertos.setCaretColor(new java.awt.Color(153, 153, 153));
 
-        txtDisciplina1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtDisciplina1.setForeground(new java.awt.Color(102, 102, 102));
-        txtDisciplina1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtDisciplina1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
-        txtDisciplina1.setCaretColor(new java.awt.Color(153, 153, 153));
+        txtDisciplina.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtDisciplina.setForeground(new java.awt.Color(102, 102, 102));
+        txtDisciplina.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtDisciplina.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
+        txtDisciplina.setCaretColor(new java.awt.Color(153, 153, 153));
 
-        txtQuestoes1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtQuestoes1.setForeground(new java.awt.Color(102, 102, 102));
-        txtQuestoes1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtQuestoes1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
-        txtQuestoes1.setCaretColor(new java.awt.Color(153, 153, 153));
+        txtQuestoes.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        txtQuestoes.setForeground(new java.awt.Color(102, 102, 102));
+        txtQuestoes.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtQuestoes.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
+        txtQuestoes.setCaretColor(new java.awt.Color(153, 153, 153));
 
         txtNota.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtNota.setForeground(new java.awt.Color(102, 102, 102));
@@ -269,11 +281,11 @@ public class TelaNono extends javax.swing.JInternalFrame {
 
         jLabel5.setFont(new java.awt.Font("Rod", 0, 11)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel5.setText(" Disciplina");
+        jLabel5.setText("     Disciplina");
 
         jLabel6.setFont(new java.awt.Font("Rod", 0, 11)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel6.setText(" Questoes");
+        jLabel6.setText("  Questoes");
 
         jLabel7.setFont(new java.awt.Font("Rod", 0, 11)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 51, 153));
@@ -301,11 +313,11 @@ public class TelaNono extends javax.swing.JInternalFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(10, 10, 10)
-                                .addComponent(txtDisciplina1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel5))
                         .addGap(30, 30, 30)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtQuestoes1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtQuestoes, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel6))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -328,7 +340,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -337,8 +349,8 @@ public class TelaNono extends javax.swing.JInternalFrame {
                     .addComponent(jLabel8))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtDisciplina1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtQuestoes1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtQuestoes, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNota, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtAcertos, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -347,7 +359,6 @@ public class TelaNono extends javax.swing.JInternalFrame {
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        jButton1.getAccessibleContext().setAccessibleName("");
         jButton1.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -387,6 +398,11 @@ public class TelaNono extends javax.swing.JInternalFrame {
         carregar_disciplinas();
     }//GEN-LAST:event_btnDisciplinaActionPerformed
 
+    private void tblDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDisciplinasMouseClicked
+        // chamando metodo para carregar as caixas de texto
+        setar_campos();
+    }//GEN-LAST:event_tblDisciplinasMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDisciplina;
@@ -407,11 +423,11 @@ public class TelaNono extends javax.swing.JInternalFrame {
     private javax.swing.JTable tblDisciplinas;
     private javax.swing.JTextField txtAcertos;
     private javax.swing.JTextField txtAluno9;
-    private javax.swing.JTextField txtDisciplina1;
+    private javax.swing.JTextField txtDisciplina;
     private javax.swing.JTextField txtMatricula;
     private javax.swing.JTextField txtNivel9;
     private javax.swing.JTextField txtNota;
-    private javax.swing.JTextField txtQuestoes1;
+    private javax.swing.JTextField txtQuestoes;
     private javax.swing.JTextField txtSturma9;
     // End of variables declaration//GEN-END:variables
 }
