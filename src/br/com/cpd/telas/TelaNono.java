@@ -125,10 +125,10 @@ public class TelaNono extends javax.swing.JInternalFrame {
         txtMatricula.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtMatricula.setMargin(new java.awt.Insets(1, 5, 1, 1));
 
-        jLabel1.setFont(new java.awt.Font("Rod", 0, 12)); // NOI18N
-        jLabel1.setText("Matricula");
+        jLabel1.setFont(new java.awt.Font("Plantagenet Cherokee", 0, 12)); // NOI18N
+        jLabel1.setText("Matrícula");
 
-        jLabel2.setFont(new java.awt.Font("Rod", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Plantagenet Cherokee", 0, 12)); // NOI18N
         jLabel2.setText("Nome");
 
         txtAluno9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -144,8 +144,8 @@ public class TelaNono extends javax.swing.JInternalFrame {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Rod", 0, 12)); // NOI18N
-        jLabel3.setText("Serie/Turma");
+        jLabel3.setFont(new java.awt.Font("Plantagenet Cherokee", 0, 12)); // NOI18N
+        jLabel3.setText("Série/Turma");
 
         txtSturma9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtSturma9.setForeground(new java.awt.Color(102, 102, 102));
@@ -153,8 +153,8 @@ public class TelaNono extends javax.swing.JInternalFrame {
         txtSturma9.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
         txtSturma9.setCaretColor(new java.awt.Color(153, 153, 153));
 
-        jLabel4.setFont(new java.awt.Font("Rod", 0, 12)); // NOI18N
-        jLabel4.setText("Nivel");
+        jLabel4.setFont(new java.awt.Font("Plantagenet Cherokee", 0, 12)); // NOI18N
+        jLabel4.setText("Nível");
 
         txtNivel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtNivel9.setForeground(new java.awt.Color(102, 102, 102));
@@ -239,10 +239,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
 
         tblDisciplinas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+
             },
             new String [] {
                 "Disciplina", "Quantidade de Questões"
@@ -279,19 +276,19 @@ public class TelaNono extends javax.swing.JInternalFrame {
         txtNota.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
         txtNota.setCaretColor(new java.awt.Color(153, 153, 153));
 
-        jLabel5.setFont(new java.awt.Font("Rod", 0, 11)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Plantagenet Cherokee", 0, 11)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel5.setText("     Disciplina");
+        jLabel5.setText(" Disciplina");
 
-        jLabel6.setFont(new java.awt.Font("Rod", 0, 11)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("Plantagenet Cherokee", 0, 11)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 51, 153));
-        jLabel6.setText("  Questoes");
+        jLabel6.setText("  Questões");
 
-        jLabel7.setFont(new java.awt.Font("Rod", 0, 11)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Plantagenet Cherokee", 0, 11)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 51, 153));
         jLabel7.setText("Acertos");
 
-        jLabel8.setFont(new java.awt.Font("Rod", 0, 11)); // NOI18N
+        jLabel8.setFont(new java.awt.Font("Plantagenet Cherokee", 0, 11)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 51, 153));
         jLabel8.setText("Nota");
 
@@ -310,11 +307,10 @@ public class TelaNono extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(txtDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel5))
+                            .addComponent(jLabel5)
+                            .addComponent(txtDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(30, 30, 30)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtQuestoes, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -340,7 +336,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -368,7 +364,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 476, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
