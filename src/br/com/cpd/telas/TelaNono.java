@@ -19,58 +19,72 @@ public class TelaNono extends javax.swing.JInternalFrame {
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
+    int nota, acertos, questoes;
+    String teste;
 
     /**
      * Creates new form TelaNono
      */
     public TelaNono() {
-        initComponents();
-        conexao = ModuloConexao.conector();
+	initComponents();
+	conexao = ModuloConexao.conector();
+	
     }
 
     private void consultar() {
-        String sql = "select *from aluno where idaluno=?";
-        try {
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1, txtMatricula.getText());
-            rs = pst.executeQuery();
-            if (rs.next()) {
-                txtAluno9.setText(rs.getString(2));
-                txtSturma9.setText(rs.getString(3));
-                txtNivel9.setText(rs.getString(4));
-                btnDisciplina.setEnabled(true);
-            } else {
-                btnDisciplina.setEnabled(false);
-                JOptionPane.showMessageDialog(null, "Aluno não encontrado !");
-            }
+	String sql = "select *from aluno where idaluno=?";
+	try {
+	    pst = conexao.prepareStatement(sql);
+	    pst.setString(1, txtMatricula.getText());
+	    rs = pst.executeQuery();
+	    if (rs.next()) {
+		txtAluno9.setText(rs.getString(2));
+		txtSturma9.setText(rs.getString(3));
+		txtNivel9.setText(rs.getString(4));
+		btnDisciplina.setEnabled(true);
+	    } else {
+		btnDisciplina.setEnabled(false);
+		JOptionPane.showMessageDialog(null, "Aluno não encontrado !");
+	    }
 
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
+	} catch (Exception e) {
+	    JOptionPane.showMessageDialog(null, e);
+	}
 
     }
 
     private void carregar_disciplinas() {
-        String sql = "select DISCIPLINA,QUANTIDADE_QUETÕES from disciplina where serie = ?";
-        try {
-            pst = conexao.prepareStatement(sql);
-            pst.setString(1, txtSturma9.getText());
-            rs = pst.executeQuery();
-            //carregando consulta na tebela com a bibliotecars2xml
-            tblDisciplinas.setModel(DbUtils.resultSetToTableModel(rs));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
-        }
+	String sql = "select DISCIPLINA,QUANTIDADE_QUETÕES from disciplina where serie = ?";
+	try {
+	    pst = conexao.prepareStatement(sql);
+	    pst.setString(1, txtSturma9.getText());
+	    rs = pst.executeQuery();
+	    //carregando consulta na tebela com a bibliotecars2xml
+	    tblDisciplinas.setModel(DbUtils.resultSetToTableModel(rs));
+	} catch (Exception e) {
+	    JOptionPane.showMessageDialog(null, e);
+	}
 
     }
 
     // metodo para carregar valores da tabela nas caixas de texto
     public void setar_campos() {
-        int setar = tblDisciplinas.getSelectedRow();
-        txtDisciplina.setText(tblDisciplinas.getModel().getValueAt(setar, 0).toString());
-        txtQuestoes.setText(tblDisciplinas.getModel().getValueAt(setar, 1).toString());
+	int setar = tblDisciplinas.getSelectedRow();
+	txtDisciplina.setText(tblDisciplinas.getModel().getValueAt(setar, 0).toString());
+	txtQuestoes.setText(tblDisciplinas.getModel().getValueAt(setar, 1).toString());
+	
+	questoes = Integer.parseInt(txtQuestoes.getText());
     }
-
+    public void calcula_nota(){
+    acertos = Integer.parseInt(teste);
+   //teste = Integer.toString(acertos);
+    //nota = questoes * acertos;
+    System.out.println(acertos);
+   
+    System.out.println(teste);
+    
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -257,6 +271,11 @@ public class TelaNono extends javax.swing.JInternalFrame {
         txtAcertos.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtAcertos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
         txtAcertos.setCaretColor(new java.awt.Color(153, 153, 153));
+        txtAcertos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAcertosKeyTyped(evt);
+            }
+        });
 
         txtDisciplina.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtDisciplina.setForeground(new java.awt.Color(102, 102, 102));
@@ -380,24 +399,31 @@ public class TelaNono extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSelectStudantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectStudantActionPerformed
-        // Using the method consultar.
-        consultar();
-
-
+	// Using the method consultar.
+	consultar();
     }//GEN-LAST:event_btnSelectStudantActionPerformed
-
+    
+    
     private void txtAluno9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAluno9ActionPerformed
-        // TODO add your handling code here:
+	// TODO add your handling code here:
     }//GEN-LAST:event_txtAluno9ActionPerformed
 
     private void btnDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisciplinaActionPerformed
-        carregar_disciplinas();
+	carregar_disciplinas();
     }//GEN-LAST:event_btnDisciplinaActionPerformed
 
     private void tblDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDisciplinasMouseClicked
-        // chamando metodo para carregar as caixas de texto
-        setar_campos();
+	// chamando metodo para carregar as caixas de texto
+	setar_campos();
     }//GEN-LAST:event_tblDisciplinasMouseClicked
+
+    private void txtAcertosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAcertosKeyTyped
+	// TODO add your handling code here:
+	teste = txtAcertos.getText();
+	calcula_nota();
+	
+		
+    }//GEN-LAST:event_txtAcertosKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
