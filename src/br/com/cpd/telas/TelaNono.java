@@ -5,9 +5,14 @@
  */
 package br.com.cpd.telas;
 
+import br.com.cpd.classes.Numeros;
 import br.com.cpd.dal.ModuloConexao;
+import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -19,8 +24,9 @@ public class TelaNono extends javax.swing.JInternalFrame {
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
-    int nota, acertos, questoes;
-    String teste;
+    int acertos, questoes;
+    double nota;
+    String sNota;
 
     /**
      * Creates new form TelaNono
@@ -28,7 +34,8 @@ public class TelaNono extends javax.swing.JInternalFrame {
     public TelaNono() {
 	initComponents();
 	conexao = ModuloConexao.conector();
-	
+	txtAcertos.setDocument(new Numeros());
+
     }
 
     private void consultar() {
@@ -72,19 +79,46 @@ public class TelaNono extends javax.swing.JInternalFrame {
 	int setar = tblDisciplinas.getSelectedRow();
 	txtDisciplina.setText(tblDisciplinas.getModel().getValueAt(setar, 0).toString());
 	txtQuestoes.setText(tblDisciplinas.getModel().getValueAt(setar, 1).toString());
-	
+
+    }
+
+    public void calcula_nota() {
 	questoes = Integer.parseInt(txtQuestoes.getText());
+	acertos = Integer.parseInt(txtAcertos.getText());
+
+	try {
+	    if(questoes >= acertos ){
+	    nota = 10.0 / questoes * acertos;
+	    BigDecimal bNota = new BigDecimal(nota).setScale(1, RoundingMode.HALF_EVEN);
+	    //System.out.println(bNota.doubleValue());
+	    sNota = bNota.toString();
+	    txtNota.setText(sNota);
+	    }
+	    else{
+	    JOptionPane.showMessageDialog(null, "Número de acertos excedente !");
+	    txtAcertos.setText("");
+	    }
+	} catch (Exception e) {
+	    JOptionPane.showMessageDialog(null, e);
+	}
     }
-    public void calcula_nota(){
-    acertos = Integer.parseInt(teste);
-   //teste = Integer.toString(acertos);
-    //nota = questoes * acertos;
-    System.out.println(acertos);
-   
-    System.out.println(teste);
+    public void popula_conferencia(){
+    
+	String matricula = txtMatricula.getText().trim();
+	String disciplina = txtDisciplina.getText().trim();
+	String acertos2 = txtAcertos.getText().trim();
+	
+	DefaultTableModel val =(DefaultTableModel) tblConferencia1.getModel();
+	val.addRow(new String[]{matricula,disciplina,acertos2,sNota});
+	
+	txtDisciplina.setText("");
+	txtQuestoes.setText("");
+	txtAcertos.setText("");
+	txtNota.setText("");        
+    
     
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -118,6 +152,9 @@ public class TelaNono extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jPanel3 = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblConferencia1 = new javax.swing.JTable();
 
         setClosable(true);
         setIconifiable(true);
@@ -129,7 +166,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
         setNormalBounds(new java.awt.Rectangle(0, 0, 0, 0));
         setPreferredSize(new java.awt.Dimension(867, 532));
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados do Aluno", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Rod", 0, 12))); // NOI18N
+        jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Dados do Aluno", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Plantagenet Cherokee", 1, 12), new java.awt.Color(153, 153, 153))); // NOI18N
 
         txtMatricula.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtMatricula.setForeground(new java.awt.Color(102, 102, 102));
@@ -249,7 +286,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
                 .addGap(9, 11, Short.MAX_VALUE))
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Displinas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Rod", 0, 12))); // NOI18N
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Displinas", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Plantagenet Cherokee", 1, 12), new java.awt.Color(153, 153, 153))); // NOI18N
 
         tblDisciplinas.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -272,6 +309,9 @@ public class TelaNono extends javax.swing.JInternalFrame {
         txtAcertos.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
         txtAcertos.setCaretColor(new java.awt.Color(153, 153, 153));
         txtAcertos.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtAcertosKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtAcertosKeyTyped(evt);
             }
@@ -282,18 +322,26 @@ public class TelaNono extends javax.swing.JInternalFrame {
         txtDisciplina.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtDisciplina.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
         txtDisciplina.setCaretColor(new java.awt.Color(153, 153, 153));
+        txtDisciplina.setEnabled(false);
 
         txtQuestoes.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtQuestoes.setForeground(new java.awt.Color(102, 102, 102));
         txtQuestoes.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtQuestoes.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
         txtQuestoes.setCaretColor(new java.awt.Color(153, 153, 153));
+        txtQuestoes.setEnabled(false);
 
         txtNota.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         txtNota.setForeground(new java.awt.Color(102, 102, 102));
         txtNota.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         txtNota.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 153, 153), 1, true));
         txtNota.setCaretColor(new java.awt.Color(153, 153, 153));
+        txtNota.setEnabled(false);
+        txtNota.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtNotaKeyPressed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Plantagenet Cherokee", 0, 11)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 51, 153));
@@ -313,9 +361,19 @@ public class TelaNono extends javax.swing.JInternalFrame {
 
         jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/cpd/icones/ancel.png"))); // NOI18N
         jButton1.setToolTipText("Cancel");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/cpd/icones/add.png"))); // NOI18N
         jButton2.setToolTipText("Insert");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -355,7 +413,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -376,6 +434,31 @@ public class TelaNono extends javax.swing.JInternalFrame {
 
         jButton1.getAccessibleContext().setAccessibleDescription("");
 
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Conferência", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Plantagenet Cherokee", 1, 12), new java.awt.Color(153, 153, 153))); // NOI18N
+
+        tblConferencia1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Matrícula", "Disciplina", "Acertos", "Nota"
+            }
+        ));
+        jScrollPane2.setViewportView(tblConferencia1);
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -383,7 +466,8 @@ public class TelaNono extends javax.swing.JInternalFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 476, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,19 +475,20 @@ public class TelaNono extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        setSize(new java.awt.Dimension(867, 532));
+        setSize(new java.awt.Dimension(867, 521));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSelectStudantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectStudantActionPerformed
 	// Using the method consultar.
 	consultar();
     }//GEN-LAST:event_btnSelectStudantActionPerformed
-    
-    
+
+
     private void txtAluno9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAluno9ActionPerformed
 	// TODO add your handling code here:
     }//GEN-LAST:event_txtAluno9ActionPerformed
@@ -419,11 +504,32 @@ public class TelaNono extends javax.swing.JInternalFrame {
 
     private void txtAcertosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAcertosKeyTyped
 	// TODO add your handling code here:
-	teste = txtAcertos.getText();
-	calcula_nota();
-	
-		
+
+
     }//GEN-LAST:event_txtAcertosKeyTyped
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+	// TODO add your handling code here:
+	popula_conferencia();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void txtNotaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNotaKeyPressed
+	// TODO add your handling code here:
+	//calcula_nota();
+    }//GEN-LAST:event_txtNotaKeyPressed
+
+    private void txtAcertosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAcertosKeyReleased
+	// TODO add your handling code here:
+	calcula_nota();
+    }//GEN-LAST:event_txtAcertosKeyReleased
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+	txtDisciplina.setText("");
+	txtQuestoes.setText("");
+	txtAcertos.setText("");
+	txtNota.setText("");
+// Limpando os campos  carregados
+    }//GEN-LAST:event_jButton1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -441,7 +547,10 @@ public class TelaNono extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable tblConferencia1;
     private javax.swing.JTable tblDisciplinas;
     private javax.swing.JTextField txtAcertos;
     private javax.swing.JTextField txtAluno9;
