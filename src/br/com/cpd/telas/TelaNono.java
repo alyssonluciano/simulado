@@ -7,7 +7,6 @@ package br.com.cpd.telas;
 
 import br.com.cpd.classes.Numeros;
 import br.com.cpd.dal.ModuloConexao;
-import com.sun.xml.internal.ws.api.streaming.XMLStreamReaderFactory;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.*;
@@ -413,7 +412,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -480,7 +479,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        setSize(new java.awt.Dimension(867, 521));
+        setSize(new java.awt.Dimension(867, 532));
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSelectStudantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectStudantActionPerformed
