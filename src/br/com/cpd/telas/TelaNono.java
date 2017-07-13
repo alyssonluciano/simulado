@@ -158,7 +158,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
-        setTitle("Conf. 9ºAno");
+        setTitle("Conferência");
         setToolTipText("");
         setMinimumSize(new java.awt.Dimension(867, 532));
         setName("FrameNono"); // NOI18N
@@ -368,6 +368,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/br/com/cpd/icones/add.png"))); // NOI18N
         jButton2.setToolTipText("Insert");
+        jButton2.setEnabled(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -520,6 +521,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
     private void txtAcertosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAcertosKeyReleased
 	// TODO add your handling code here:
 	calcula_nota();
+        jButton2.setEnabled(true);
     }//GEN-LAST:event_txtAcertosKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -527,6 +529,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
 	txtQuestoes.setText("");
 	txtAcertos.setText("");
 	txtNota.setText("");
+        jButton2.setEnabled(false);
 // Limpando os campos  carregados
     }//GEN-LAST:event_jButton1ActionPerformed
 

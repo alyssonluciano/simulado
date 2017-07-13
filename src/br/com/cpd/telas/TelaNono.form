@@ -5,7 +5,7 @@
     <Property name="closable" type="boolean" value="true"/>
     <Property name="iconifiable" type="boolean" value="true"/>
     <Property name="maximizable" type="boolean" value="true"/>
-    <Property name="title" type="java.lang.String" value="Conf. 9&#xba;Ano"/>
+    <Property name="title" type="java.lang.String" value="Confer&#xea;ncia"/>
     <Property name="toolTipText" type="java.lang.String" value=""/>
     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
       <Dimension value="[867, 532]"/>
@@ -581,6 +581,7 @@
               <Image iconType="3" name="/br/com/cpd/icones/add.png"/>
             </Property>
             <Property name="toolTipText" type="java.lang.String" value="Insert"/>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
