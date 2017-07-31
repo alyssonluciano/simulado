@@ -10,6 +10,8 @@ import br.com.cpd.dal.ModuloConexao;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
@@ -26,96 +28,232 @@ public class TelaNono extends javax.swing.JInternalFrame {
     int acertos, questoes;
     double nota;
     String sNota;
+    static String sSimNome;
+    ArrayList<String> lastid = new ArrayList<String>();
 
     /**
      * Creates new form TelaNono
      */
     public TelaNono() {
-	initComponents();
-	conexao = ModuloConexao.conector();
-	txtAcertos.setDocument(new Numeros());
+        initComponents();
+        conexao = ModuloConexao.conector();
+        txtAcertos.setDocument(new Numeros());
 
     }
 
     private void consultar() {
-	String sql = "select *from aluno where idaluno=?";
-	try {
-	    pst = conexao.prepareStatement(sql);
-	    pst.setString(1, txtMatricula.getText());
-	    rs = pst.executeQuery();
-	    if (rs.next()) {
-		txtAluno9.setText(rs.getString(2));
-		txtSturma9.setText(rs.getString(3));
-		txtNivel9.setText(rs.getString(4));
-		btnDisciplina.setEnabled(true);
-	    } else {
-		btnDisciplina.setEnabled(false);
-		JOptionPane.showMessageDialog(null, "Aluno não encontrado !");
-	    }
+        String sql = "select *from aluno where idaluno=?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtMatricula.getText());
+            rs = pst.executeQuery();
+            if (rs.next()) {
+                txtAluno9.setText(rs.getString(2));
+                txtSturma9.setText(rs.getString(3));
+                txtNivel9.setText(rs.getString(4));
+                btnDisciplina.setEnabled(true);
+            } else {
+                btnDisciplina.setEnabled(false);
+                JOptionPane.showMessageDialog(null, "Aluno não encontrado !");
+            }
 
-	} catch (Exception e) {
-	    JOptionPane.showMessageDialog(null, e);
-	}
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
 
     }
 
     private void carregar_disciplinas() {
-	String sql = "select DISCIPLINA,QUANTIDADE_QUETÕES from disciplina where serie = ?";
-	try {
-	    pst = conexao.prepareStatement(sql);
-	    pst.setString(1, txtSturma9.getText());
-	    rs = pst.executeQuery();
-	    //carregando consulta na tebela com a bibliotecars2xml
-	    tblDisciplinas.setModel(DbUtils.resultSetToTableModel(rs));
-	} catch (Exception e) {
-	    JOptionPane.showMessageDialog(null, e);
-	}
+        String sql = "select DISCIPLINA,QUANTIDADE_QUETÕES from disciplina where serie = ?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtSturma9.getText());
+            rs = pst.executeQuery();
+            //carregando consulta na tebela com a bibliotecars2xml
+            tblDisciplinas.setModel(DbUtils.resultSetToTableModel(rs));
+            btnDisciplina.setEnabled(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+    }
+
+    public void insert() {
+        String matricula = txtMatricula.getText().trim();
+        String disciplina = txtDisciplina.getText().trim();
+        String acertos2 = txtAcertos.getText().trim();
+
+        String sql = "insert into nota(MATRICULA,SIMULADO,DISCIPLINA,ACERTOS,NOTA) values (?,?,?,?,?)";
+
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, matricula);
+            pst.setString(2, sSimNome);
+            pst.setString(3, disciplina);
+            pst.setString(4, acertos2);
+            pst.setString(5, sNota);
+            // Here we update the table.
+            pst.executeUpdate();
+
+            txtDisciplina.setText("");
+            txtQuestoes.setText("");
+            txtAcertos.setText("");
+            txtNota.setText("");
+
+            jButton2.setEnabled(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+
+        }
+
+    }
+
+    private void select_nota() {
+        String sql = "select IDNOTA,MATRICULA,SIMULADO,DISCIPLINA,ACERTOS,NOTA from nota where MATRICULA = ?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, txtMatricula.getText());
+            rs = pst.executeQuery();
+            //carregando consulta na tebela com a bibliotecars2xml
+            tblConferencia1.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+    }
+
+    public void descartar() {
+// here get lastid and use it in the sql comand to delete tha last do.
+        int btnSair = JOptionPane.showConfirmDialog(null, "Deseja Salvar as ultimas alterações?", "Atenção!", JOptionPane.YES_NO_OPTION);
+
+        if (btnSair == JOptionPane.YES_OPTION) {
+            this.dispose();
+        } else if (btnSair == JOptionPane.NO_OPTION) {
+
+            String sql = "DELETE FROM `dbconferencia`.`nota` WHERE `IDNOTA`=?";
+            try {
+                for (Iterator iterator = lastid.iterator(); iterator.hasNext();) {
+                    String c = (String) iterator.next();
+                    pst = conexao.prepareStatement(sql);
+                    pst.setString(1, c);
+                    pst.executeUpdate();
+                }
+                this.dispose();
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, e);
+            }
+        }
+
+    }
+
+    private void altera_nota() {
+        int alter = tblConferencia1.getSelectedRow();
+
+        String id = tblConferencia1.getModel().getValueAt(alter, 0).toString();
+        String disc = tblConferencia1.getModel().getValueAt(alter, 3).toString();
+        String acertos = tblConferencia1.getModel().getValueAt(alter, 4).toString();
+        String nota = tblConferencia1.getModel().getValueAt(alter, 5).toString();
+
+        String sql = "update nota set DISCIPLINA=?,ACERTOS=?, NOTA=? where IDNOTA=?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, disc);
+            pst.setString(2, acertos);
+            pst.setString(3, nota);
+            pst.setString(4, id);
+            pst.executeUpdate();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+    }
+
+    public void excluir() {
+        int excluir = tblConferencia1.getSelectedRow();
+
+        String idsim = tblConferencia1.getModel().getValueAt(excluir, 0).toString();
+
+        String sql = "DELETE FROM `dbconferencia`.`nota` WHERE `IDNOTA`=?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, idsim);
+            pst.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "O Registro selecionado foi excluido !");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+
+    }
+
+    public void getid() {
+        String sql = "select MAX(IDNOTA) as IDNOTA FROM nota";
+
+        //ArrayList<String> lastid = new ArrayList<String>();
+        try {
+            pst = conexao.prepareStatement(sql);
+            rs = pst.executeQuery();
+            while (rs.next()) {
+
+                lastid.add(rs.getString("IDNOTA"));
+                int theSize = lastid.size();
+                System.out.println(theSize);
+                System.out.println(lastid);
+                //int lastid = rs.getInt("IDNOTA");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
 
     }
 
     // metodo para carregar valores da tabela nas caixas de texto
     public void setar_campos() {
-	int setar = tblDisciplinas.getSelectedRow();
-	txtDisciplina.setText(tblDisciplinas.getModel().getValueAt(setar, 0).toString());
-	txtQuestoes.setText(tblDisciplinas.getModel().getValueAt(setar, 1).toString());
+        int setar = tblDisciplinas.getSelectedRow();
+        txtDisciplina.setText(tblDisciplinas.getModel().getValueAt(setar, 0).toString());
+        txtQuestoes.setText(tblDisciplinas.getModel().getValueAt(setar, 1).toString());
 
     }
 
     public void calcula_nota() {
-	questoes = Integer.parseInt(txtQuestoes.getText());
-	acertos = Integer.parseInt(txtAcertos.getText());
+        questoes = Integer.parseInt(txtQuestoes.getText());
+        acertos = Integer.parseInt(txtAcertos.getText());
 
-	try {
-	    if(questoes >= acertos ){
-	    nota = 10.0 / questoes * acertos;
-	    BigDecimal bNota = new BigDecimal(nota).setScale(1, RoundingMode.HALF_EVEN);
-	    //System.out.println(bNota.doubleValue());
-	    sNota = bNota.toString();
-	    txtNota.setText(sNota);
-	    }
-	    else{
-	    JOptionPane.showMessageDialog(null, "Número de acertos excedente !");
-	    txtAcertos.setText("");
-	    }
-	} catch (Exception e) {
-	    JOptionPane.showMessageDialog(null, e);
-	}
+        try {
+            if (questoes >= acertos) {
+                nota = 10.0 / questoes * acertos;
+                BigDecimal bNota = new BigDecimal(nota).setScale(1, RoundingMode.HALF_EVEN);
+                //System.out.println(bNota.doubleValue());
+                sNota = bNota.toString();
+                txtNota.setText(sNota);
+            } else {
+                JOptionPane.showMessageDialog(null, "Número de acertos excedente !");
+                txtAcertos.setText("");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
-    public void popula_conferencia(){
-    
-	String matricula = txtMatricula.getText().trim();
-	String disciplina = txtDisciplina.getText().trim();
-	String acertos2 = txtAcertos.getText().trim();
-	
-	DefaultTableModel val =(DefaultTableModel) tblConferencia1.getModel();
-	val.addRow(new String[]{matricula,disciplina,acertos2,sNota});
-	
-	txtDisciplina.setText("");
-	txtQuestoes.setText("");
-	txtAcertos.setText("");
-	txtNota.setText("");        
-    
-    
+
+    public void popula_conferencia() {
+
+        String matricula = txtMatricula.getText().trim();
+        String disciplina = txtDisciplina.getText().trim();
+        String acertos2 = txtAcertos.getText().trim();
+
+        DefaultTableModel val = (DefaultTableModel) tblConferencia1.getModel();
+        val.addRow(new String[]{sSimNome, matricula, disciplina, acertos2, sNota});
+
+        txtDisciplina.setText("");
+        txtQuestoes.setText("");
+        txtAcertos.setText("");
+        txtNota.setText("");
+
+        jButton2.setEnabled(false);
+
     }
 
     /**
@@ -154,10 +292,10 @@ public class TelaNono extends javax.swing.JInternalFrame {
         jPanel3 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblConferencia1 = new javax.swing.JTable();
+        btnApagar = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
+        btnAlterar = new javax.swing.JButton();
 
-        setClosable(true);
-        setIconifiable(true);
-        setMaximizable(true);
         setTitle("Conferência");
         setToolTipText("");
         setMinimumSize(new java.awt.Dimension(867, 532));
@@ -294,7 +432,15 @@ public class TelaNono extends javax.swing.JInternalFrame {
             new String [] {
                 "Disciplina", "Quantidade de Questões"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblDisciplinas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblDisciplinasMouseClicked(evt);
@@ -441,22 +587,88 @@ public class TelaNono extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Matrícula", "Disciplina", "Acertos", "Nota"
+                "ID", "MATRÍCULA", "SIMULADO", "DISCIPLINA", "ACERTOS", "NOTA"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tblConferencia1);
+        if (tblConferencia1.getColumnModel().getColumnCount() > 0) {
+            tblConferencia1.getColumnModel().getColumn(0).setResizable(false);
+            tblConferencia1.getColumnModel().getColumn(0).setPreferredWidth(30);
+            tblConferencia1.getColumnModel().getColumn(1).setResizable(false);
+            tblConferencia1.getColumnModel().getColumn(1).setPreferredWidth(100);
+            tblConferencia1.getColumnModel().getColumn(2).setResizable(false);
+            tblConferencia1.getColumnModel().getColumn(2).setPreferredWidth(150);
+            tblConferencia1.getColumnModel().getColumn(3).setResizable(false);
+            tblConferencia1.getColumnModel().getColumn(4).setResizable(false);
+            tblConferencia1.getColumnModel().getColumn(5).setResizable(false);
+            tblConferencia1.getColumnModel().getColumn(5).setPreferredWidth(50);
+        }
+
+        btnApagar.setBackground(new java.awt.Color(51, 153, 255));
+        btnApagar.setForeground(new java.awt.Color(255, 255, 255));
+        btnApagar.setText("Excluir");
+        btnApagar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.blue, null, null));
+        btnApagar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnApagar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnApagarActionPerformed(evt);
+            }
+        });
+
+        btnSalvar.setBackground(new java.awt.Color(51, 153, 255));
+        btnSalvar.setForeground(new java.awt.Color(255, 255, 255));
+        btnSalvar.setText("Sair");
+        btnSalvar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.blue, null, null));
+        btnSalvar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
+        btnAlterar.setBackground(new java.awt.Color(51, 153, 255));
+        btnAlterar.setForeground(new java.awt.Color(255, 255, 255));
+        btnAlterar.setText("Alterar");
+        btnAlterar.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.blue, null, null));
+        btnAlterar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAlterarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 458, Short.MAX_VALUE)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(btnApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(39, 39, 39)
+                .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 203, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAlterar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(7, 7, 7))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -484,58 +696,86 @@ public class TelaNono extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnSelectStudantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectStudantActionPerformed
-	// Using the method consultar.
-	consultar();
+        // Using the method consultar.
+        consultar();
+        ((DefaultTableModel) tblConferencia1.getModel()).setNumRows(0);
     }//GEN-LAST:event_btnSelectStudantActionPerformed
 
 
     private void txtAluno9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAluno9ActionPerformed
-	// TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_txtAluno9ActionPerformed
 
     private void btnDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDisciplinaActionPerformed
-	carregar_disciplinas();
+        carregar_disciplinas();
     }//GEN-LAST:event_btnDisciplinaActionPerformed
 
     private void tblDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDisciplinasMouseClicked
-	// chamando metodo para carregar as caixas de texto
-	setar_campos();
+        // chamando metodo para carregar as caixas de texto
+        setar_campos();
     }//GEN-LAST:event_tblDisciplinasMouseClicked
 
     private void txtAcertosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAcertosKeyTyped
-	// TODO add your handling code here:
+        // TODO add your handling code here:
 
 
     }//GEN-LAST:event_txtAcertosKeyTyped
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-	// TODO add your handling code here:
-	popula_conferencia();
+        // TODO add your handling code here:
+        //popula_conferencia();
+        insert();
+        select_nota();
+        getid();
+
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void txtNotaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNotaKeyPressed
-	// TODO add your handling code here:
-	//calcula_nota();
+        // TODO add your handling code here:
+        //calcula_nota();
     }//GEN-LAST:event_txtNotaKeyPressed
 
     private void txtAcertosKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAcertosKeyReleased
-	// TODO add your handling code here:
-	calcula_nota();
+        // TODO add your handling code here:
+        calcula_nota();
         jButton2.setEnabled(true);
     }//GEN-LAST:event_txtAcertosKeyReleased
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-	txtDisciplina.setText("");
-	txtQuestoes.setText("");
-	txtAcertos.setText("");
-	txtNota.setText("");
+        txtDisciplina.setText("");
+        txtQuestoes.setText("");
+        txtAcertos.setText("");
+        txtNota.setText("");
         jButton2.setEnabled(false);
+
 // Limpando os campos  carregados
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
+        // here hwo to remove table lines when selected
+        //(DefaultTableModel) tblConferencia1.getModel()).removeRow(tblConferencia1.getSelectedRow());
+        excluir();
+        select_nota();
+
+    }//GEN-LAST:event_btnApagarActionPerformed
+
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+        // TODO add your handling code here:        
+        descartar();
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
+    private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
+        // TODO update on nota table in data source
+        altera_nota();
+        select_nota();
+    }//GEN-LAST:event_btnAlterarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlterar;
+    private javax.swing.JButton btnApagar;
     private javax.swing.JButton btnDisciplina;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JButton btnSelectStudant;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

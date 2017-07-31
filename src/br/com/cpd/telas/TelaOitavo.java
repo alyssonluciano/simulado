@@ -14,12 +14,14 @@ import br.com.cpd.dal.ModuloConexao;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import br.com.cpd.telas.TelaNono;
 
 public class TelaOitavo extends javax.swing.JFrame {
 
     Connection conexao = null;
     PreparedStatement pst = null;
     ResultSet rs = null;
+    String stringSimNome;
 
     /**
      * Creates new form TelaOitavo
@@ -30,7 +32,7 @@ public class TelaOitavo extends javax.swing.JFrame {
         populaJCombobox();
     }
 
-   /* private void consultar() {
+    /* private void consultar() {
         String sql = "select *from aluno where idaluno=?";
         try {
             pst = conexao.prepareStatement(sql);
@@ -49,7 +51,6 @@ public class TelaOitavo extends javax.swing.JFrame {
         }
 
     }*/
-
     public void populaJCombobox() {
         String sql = "select * from SIMULADO";
 
@@ -59,13 +60,27 @@ public class TelaOitavo extends javax.swing.JFrame {
 
             while (rs.next()) {
                 cmbDisciplina.addItem(rs.getString("SIMNOME"));
-                
+
             }
 
         } catch (SQLException ex) {
             Logger.getLogger(TelaOitavo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    public void insert() {
+        stringSimNome = JOptionPane.showInputDialog(null, "Nome do Simulado", "SIM0_0BIM_EMI");
+
+        String sql = "insert into SIMULADO(SIMNOME) values (?)";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, stringSimNome);
+            // Here we update the table.
+            pst.executeUpdate();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
 
     /**
@@ -79,8 +94,10 @@ public class TelaOitavo extends javax.swing.JFrame {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        btnSelectStudant = new javax.swing.JButton();
+        btnInsert = new javax.swing.JButton();
         cmbDisciplina = new javax.swing.JComboBox<>();
+        btnSelect = new javax.swing.JButton();
+        btnCancel = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -94,10 +111,10 @@ public class TelaOitavo extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Simulado");
 
-        btnSelectStudant.setText("Selecionar Aluno");
-        btnSelectStudant.addActionListener(new java.awt.event.ActionListener() {
+        btnInsert.setText("Inserir");
+        btnInsert.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSelectStudantActionPerformed(evt);
+                btnInsertActionPerformed(evt);
             }
         });
 
@@ -107,31 +124,55 @@ public class TelaOitavo extends javax.swing.JFrame {
             }
         });
 
+        btnSelect.setText("Selecionar");
+        btnSelect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSelectActionPerformed(evt);
+            }
+        });
+
+        btnCancel.setText("Cancelar");
+        btnCancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnSelectStudant, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(114, 114, 114)
+                .addGap(216, 216, 216)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel1)
-                    .addComponent(cmbDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 140, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(btnSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)
+                        .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(cmbDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(143, 143, 143))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(cmbDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 107, Short.MAX_VALUE)
-                .addComponent(btnSelectStudant, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(73, 73, 73))
         );
 
         jLabel1.getAccessibleContext().setAccessibleDescription("");
@@ -157,15 +198,38 @@ public class TelaOitavo extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnSelectStudantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectStudantActionPerformed
-        // Using the method consultar.
-        //consultar();
+    private void btnInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertActionPerformed
+        // Insert a new SMULADO in the DataBase.
+        insert();
+        cmbDisciplina.removeAllItems();
         populaJCombobox();
-    }//GEN-LAST:event_btnSelectStudantActionPerformed
+
+    }//GEN-LAST:event_btnInsertActionPerformed
 
     private void cmbDisciplinaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbDisciplinaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cmbDisciplinaActionPerformed
+
+    private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
+        // TODO add your handling code here:
+        TelaSelect master = new TelaSelect();
+        master.setVisible(true);
+        TelaNono.sSimNome = cmbDisciplina.getSelectedItem().toString();
+        this.dispose();
+
+    }//GEN-LAST:event_btnSelectActionPerformed
+
+    private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
+        int btnCancel = JOptionPane.showConfirmDialog(null, "Deseja sair?", "Atenção1", JOptionPane.YES_NO_OPTION);
+
+        if (btnCancel == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        } else if (btnCancel == JOptionPane.NO_OPTION) {
+            JOptionPane.showMessageDialog(null, "Ok, Selecione o simulado");
+        }
+
+
+    }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -195,15 +259,15 @@ public class TelaOitavo extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaOitavo().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new TelaOitavo().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnSelectStudant;
+    private javax.swing.JButton btnCancel;
+    private javax.swing.JButton btnInsert;
+    private javax.swing.JButton btnSelect;
     private javax.swing.JComboBox<String> cmbDisciplina;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
