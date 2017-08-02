@@ -59,7 +59,7 @@ public class TelaSelect extends javax.swing.JFrame {
         btGrupo.add(RB8ano);
         RB8ano.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N
         RB8ano.setForeground(new java.awt.Color(102, 102, 102));
-        RB8ano.setText("8° Ano");
+        RB8ano.setText("Relatório");
 
         btGrupo.add(RR9ano);
         RR9ano.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N
@@ -172,8 +172,9 @@ public class TelaSelect extends javax.swing.JFrame {
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         // Aqui eu chamo as telas de cada turma.
         if (RB8ano.isSelected()) {
-            TelaOitavo oitavo = new TelaOitavo();
-            oitavo.setVisible(true);
+            Relatorio consulta = new Relatorio();
+	    consulta.setVisible(true);
+	    desktop.add(consulta);
 
             //this.dispose();
             //JOptionPane.showMessageDialog(null, "Sorry, tela em construção");
