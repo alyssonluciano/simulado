@@ -15,7 +15,8 @@ import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
-
+import br.com.cpd.telas.TelaOitavo;
+import br.com.cpd.telas.TelaSelect;
 /**
  *
  * @author Alysson
@@ -59,8 +60,18 @@ public class TelaNono extends javax.swing.JInternalFrame {
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
+	    
         }
 
+    }
+    public void check_turma() {
+	String t = txtSturma9.getText();
+	if (t.equals(TelaOitavo.turma)) {
+
+	} else {
+	    JOptionPane.showMessageDialog(null, "O aluno não pertence a turma selecionada, favor reiniciar");
+	    this.dispose();    
+	}
     }
 
     private void carregar_disciplinas() {
@@ -99,7 +110,6 @@ public class TelaNono extends javax.swing.JInternalFrame {
             txtQuestoes.setText("");
             txtAcertos.setText("");
             txtNota.setText("");
-
             jButton2.setEnabled(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
@@ -699,6 +709,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
         // Using the method consultar.
         consultar();
         ((DefaultTableModel) tblConferencia1.getModel()).setNumRows(0);
+	check_turma();
     }//GEN-LAST:event_btnSelectStudantActionPerformed
 
 

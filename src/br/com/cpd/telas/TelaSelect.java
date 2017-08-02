@@ -74,7 +74,7 @@ public class TelaSelect extends javax.swing.JFrame {
         btGrupo.add(RB3serie);
         RB3serie.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N
         RB3serie.setForeground(new java.awt.Color(102, 102, 102));
-        RB3serie.setText("3ª Serie");
+        RB3serie.setText("Reiniciar");
 
         jLabel1.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 0, 153));
@@ -187,7 +187,8 @@ public class TelaSelect extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Sorry, tela em construção");
         } else if (RB3serie.isSelected()) {
             this.dispose();
-            JOptionPane.showMessageDialog(null, "Sorry, tela em construção");
+            TelaOitavo oitavo = new TelaOitavo ();
+	    oitavo.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(null, "Selecione uma opção");
         }

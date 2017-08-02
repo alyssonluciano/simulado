@@ -22,13 +22,15 @@ public class TelaOitavo extends javax.swing.JFrame {
     PreparedStatement pst = null;
     ResultSet rs = null;
     String stringSimNome;
+    static String turma;
 
     /**
      * Creates new form TelaOitavo
      */
     public TelaOitavo() {
-        initComponents();
-        conexao = ModuloConexao.conector();
+        initComponents();	
+	
+        conexao = ModuloConexao.conector();	
         populaJCombobox();
     }
 
@@ -51,6 +53,11 @@ public class TelaOitavo extends javax.swing.JFrame {
         }
 
     }*/
+    
+    
+    
+    
+    
     public void populaJCombobox() {
         String sql = "select * from SIMULADO";
 
@@ -82,6 +89,21 @@ public class TelaOitavo extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
     }
+    public void get_turma(){
+    
+	if (rbOitavo.isSelected()) {	    
+	    turma = "8";	    
+	} else if(rbNono.isSelected()){
+	    turma = "9";
+	}else if(rbSerie1.isSelected()){
+	    turma = "1";
+	}else if(rbSerie2.isSelected()){
+	    turma = "2";
+	}else if(rbSerie3.isSelected()){
+	    turma ="3";
+	}
+	System.out.println(turma);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -92,12 +114,18 @@ public class TelaOitavo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btgTurma = new javax.swing.ButtonGroup();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         btnInsert = new javax.swing.JButton();
         cmbDisciplina = new javax.swing.JComboBox<>();
         btnSelect = new javax.swing.JButton();
         btnCancel = new javax.swing.JButton();
+        rbOitavo = new javax.swing.JRadioButton();
+        rbNono = new javax.swing.JRadioButton();
+        rbSerie1 = new javax.swing.JRadioButton();
+        rbSerie2 = new javax.swing.JRadioButton();
+        rbSerie3 = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -138,6 +166,21 @@ public class TelaOitavo extends javax.swing.JFrame {
             }
         });
 
+        btgTurma.add(rbOitavo);
+        rbOitavo.setText("8º");
+
+        btgTurma.add(rbNono);
+        rbNono.setText("9º");
+
+        btgTurma.add(rbSerie1);
+        rbSerie1.setText("1ª");
+
+        btgTurma.add(rbSerie2);
+        rbSerie2.setText("2ª");
+
+        btgTurma.add(rbSerie3);
+        rbSerie3.setText("3ª");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -150,15 +193,29 @@ public class TelaOitavo extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64)
-                        .addComponent(btnSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(64, 64, 64)
-                        .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(20, 20, 20))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                         .addComponent(cmbDisciplina, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(143, 143, 143))))
+                        .addGap(143, 143, 143))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(rbOitavo)
+                            .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(64, 64, 64)
+                                .addComponent(btnSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(64, 64, 64))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(32, 32, 32)
+                                .addComponent(rbNono)
+                                .addGap(29, 29, 29)
+                                .addComponent(rbSerie1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(rbSerie2)
+                                .addGap(33, 33, 33)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(rbSerie3)
+                            .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(20, 20, 20))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -172,7 +229,14 @@ public class TelaOitavo extends javax.swing.JFrame {
                     .addComponent(btnCancel, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSelect, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnInsert, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(73, 73, 73))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(rbOitavo)
+                    .addComponent(rbNono)
+                    .addComponent(rbSerie1)
+                    .addComponent(rbSerie2)
+                    .addComponent(rbSerie3))
+                .addGap(17, 17, 17))
         );
 
         jLabel1.getAccessibleContext().setAccessibleDescription("");
@@ -212,10 +276,16 @@ public class TelaOitavo extends javax.swing.JFrame {
 
     private void btnSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelectActionPerformed
         // TODO add your handling code here:
-        TelaSelect master = new TelaSelect();
-        master.setVisible(true);
-        TelaNono.sSimNome = cmbDisciplina.getSelectedItem().toString();
-        this.dispose();
+	get_turma();
+	if (turma == null) {
+	    JOptionPane.showMessageDialog(null, "Escolha uma tuarma");
+
+	} else {
+	    TelaSelect master = new TelaSelect();	   
+	    master.setVisible(true);
+	    TelaNono.sSimNome = cmbDisciplina.getSelectedItem().toString();
+	    this.dispose();
+	}
 
     }//GEN-LAST:event_btnSelectActionPerformed
 
@@ -265,11 +335,17 @@ public class TelaOitavo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.ButtonGroup btgTurma;
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnInsert;
     private javax.swing.JButton btnSelect;
     private javax.swing.JComboBox<String> cmbDisciplina;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JRadioButton rbNono;
+    private javax.swing.JRadioButton rbOitavo;
+    private javax.swing.JRadioButton rbSerie1;
+    private javax.swing.JRadioButton rbSerie2;
+    private javax.swing.JRadioButton rbSerie3;
     // End of variables declaration//GEN-END:variables
 }
