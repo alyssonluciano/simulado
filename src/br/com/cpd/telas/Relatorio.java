@@ -51,7 +51,7 @@ public class Relatorio extends javax.swing.JInternalFrame {
 
     }
       private void select_nota() {
-        String sql = "SELECT nota.MATRICULA, aluno.aluno, aluno.nivel,aluno.SERIE,nota.DISCIPLINA, nota.ACERTOS,		   \n"
+        String sql = "SELECT nota.IDNOTA, nota.MATRICULA, aluno.aluno, aluno.nivel,aluno.SERIE,nota.DISCIPLINA, nota.ACERTOS,		   \n"
 		  + "nota.NOTA, nota.CONFERENCIA_DATA \n"
 		  + "\n"
 		  + "FROM aluno INNER JOIN nota on aluno.IDALUNO = nota.MATRICULA WHERE nota.SIMULADO =  ?";
