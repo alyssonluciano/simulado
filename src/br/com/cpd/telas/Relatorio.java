@@ -7,10 +7,14 @@ package br.com.cpd.telas;
 
 import java.sql.*;
 import br.com.cpd.dal.ModuloConexao;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import net.proteanit.sql.DbUtils;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 
 
@@ -61,7 +65,8 @@ public class Relatorio extends javax.swing.JInternalFrame {
             rs = pst.executeQuery();
             //carregando consulta na tebela com a bibliotecars2xml
             tblNota.setModel(DbUtils.resultSetToTableModel(rs));
-            btnPesquisa.setEnabled(false);
+            //btnPesquisa.setEnabled(false);
+	    //btnImprimir.setEnabled(false);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e);
         }
@@ -144,7 +149,6 @@ public class Relatorio extends javax.swing.JInternalFrame {
         btnPesquisa.setText("Pesquisar");
         btnPesquisa.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, null, java.awt.Color.blue, null, null));
         btnPesquisa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnPesquisa.setEnabled(false);
         btnPesquisa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPesquisaActionPerformed(evt);
@@ -248,32 +252,89 @@ public class Relatorio extends javax.swing.JInternalFrame {
 
     private void btnApagarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnApagarActionPerformed
         // here hwo to remove table lines when selected
-        //(DefaultTableModel) tblConferencia1.getModel()).removeRow(tblConferencia1.getSelectedRow());
+        int excluir = tblNota.getSelectedRow();
+
+        String idsim = tblNota.getModel().getValueAt(excluir, 0).toString();
+
+        String sql = "DELETE FROM `dbconferencia`.`nota` WHERE `IDNOTA`=?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, idsim);
+            pst.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "O Registro selecionado foi excluido !");
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+	select_nota();	
         
     }//GEN-LAST:event_btnApagarActionPerformed
 
     private void btnAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlterarActionPerformed
         // TODO update on nota table in data source
-       
+	int alter = tblNota.getSelectedRow();
+
+        String id = tblNota.getModel().getValueAt(alter, 0).toString();
+        String disc = tblNota.getModel().getValueAt(alter, 5).toString();
+        String acertos = tblNota.getModel().getValueAt(alter, 6).toString();
+        String nota = tblNota.getModel().getValueAt(alter, 7).toString();
+
+        String sql = "update nota set DISCIPLINA=?,ACERTOS=?, NOTA=? where IDNOTA=?";
+        try {
+            pst = conexao.prepareStatement(sql);
+            pst.setString(1, disc);
+            pst.setString(2, acertos);
+            pst.setString(3, nota);
+            pst.setString(4, id);
+            pst.executeUpdate();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+	JOptionPane.showMessageDialog(null, "Informação alterada com sucesso!");
+       select_nota();
     }//GEN-LAST:event_btnAlterarActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-        // TODO add your handling code here:
+        // Geração do relatorio de conferencia
+	int confirma = JOptionPane.showConfirmDialog(null, "Confirma a impressão desse relatório?",
+		"Atenção", JOptionPane.YES_NO_OPTION);
+	if (confirma == JOptionPane.YES_OPTION) {
+	    try {
+		HashMap filtro = new HashMap();
+		filtro.put("cbmSim",cmbSimulado.getSelectedItem().toString());
+		JasperPrint print = JasperFillManager.fillReport("C:\\Users\\Alysson\\Documents\\NetBeansProjects\\conferenciasimulado\\src\\reports\\MyReports\\conferencia.jasper", filtro, conexao);
+		// exibe o relatorio
+		JasperViewer.viewReport(print,false);
+	    } catch (Exception e) {
+		JOptionPane.showMessageDialog(null, e);
+	    }
+
+	}
+	
+	
+	
+	
+	
+	
         
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     private void btnPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisaActionPerformed
         // TODO add your handling code here:
 	select_nota();
-	cmbSimulado.setSelectedIndex(0);
-	if (cmbSimulado.getSelectedItem() == "Selecione o Simulado") {
-	    btnPesquisa.setEnabled(false);
-	}
+	//cmbSimulado.setSelectedIndex(0);
+	//if (cmbSimulado.getSelectedItem() == "Selecione o Simulado") {
+	   // btnPesquisa.setEnabled(false);
+	   // btnImprimir.setEnabled(false);
+	//}
     }//GEN-LAST:event_btnPesquisaActionPerformed
 
     private void cmbSimuladoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbSimuladoItemStateChanged
         // TODO add your handling code here:
-	btnPesquisa.setEnabled(true);
+	//btnPesquisa.setEnabled(true);
+	//btnImprimir.setEnabled(true);
     }//GEN-LAST:event_cmbSimuladoItemStateChanged
 
 

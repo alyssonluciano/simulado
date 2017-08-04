@@ -69,7 +69,7 @@ public class TelaSelect extends javax.swing.JFrame {
         btGrupo.add(RB12serie);
         RB12serie.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N
         RB12serie.setForeground(new java.awt.Color(102, 102, 102));
-        RB12serie.setText("1ª e 2ª Serie");
+        RB12serie.setText("Cadastro");
 
         btGrupo.add(RB3serie);
         RB3serie.setFont(new java.awt.Font("Rockwell", 0, 18)); // NOI18N

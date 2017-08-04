@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="conferencia" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="c731a1a8-0756-4caa-96f2-7af05e0acf66">
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="481"/>
+	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="519"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="dbconferencia"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<parameter name="cbmSim" class="java.lang.String">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT nota.MATRICULA, aluno.aluno, aluno.nivel,aluno.SERIE,nota.DISCIPLINA, nota.ACERTOS, 
+nota.NOTA, nota.CONFERENCIA_DATA 
+FROM aluno INNER JOIN nota on aluno.IDALUNO = nota.MATRICULA WHERE nota.SIMULADO = $P{cbmSim}]]>
+	</queryString>
+	<field name="MATRICULA" class="java.lang.Integer"/>
+	<field name="aluno" class="java.lang.String"/>
+	<field name="nivel" class="java.lang.String"/>
+	<field name="SERIE" class="java.lang.String"/>
+	<field name="DISCIPLINA" class="java.lang.String"/>
+	<field name="ACERTOS" class="java.lang.Integer"/>
+	<field name="NOTA" class="java.math.BigDecimal"/>
+	<field name="CONFERENCIA_DATA" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="81" splitType="Stretch">
+			<textField pattern="MMM d, yyyy">
+				<reportElement x="730" y="0" width="90" height="20" uuid="8d934c15-b992-4949-a675-3e1683bac298"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="HH:mm">
+				<reportElement x="760" y="15" width="60" height="20" uuid="47c27a69-6391-4930-b9b2-ab972aa3554d"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="200" y="5" width="410" height="40" uuid="b292376e-247f-4c0a-9684-96de335d509e"/>
+				<textElement>
+					<font fontName="SansSerif" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relatório de Correção de Simulado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="366" y="38" width="70" height="39" uuid="34ad1fa3-3f8a-473d-8cdf-f6b1af2daee1"/>
+				<textElement>
+					<font fontName="Plantagenet Cherokee" size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CPD]]></text>
+			</staticText>
+			<image>
+				<reportElement x="10" y="0" width="70" height="74" uuid="e8e22b4b-1670-4a21-9052-e5f6d9272672"/>
+				<imageExpression><![CDATA["C:/Users/Alysson/Documents/NetBeansProjects/conferenciasimulado/src/index_header_logoevl.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13" splitType="Stretch">
+			<rectangle>
+				<reportElement x="10" y="0" width="800" height="1" uuid="53344556-4be6-4add-a227-ede12d1288b5"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="d8a87408-596c-4cd5-a334-e3a08becda31"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Matrícula]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="0" width="100" height="30" uuid="82fd2b21-0e95-45e3-b2d1-9a06f69a56e3"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Aluno]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="366" y="0" width="56" height="30" uuid="956a4dc3-0851-46ad-9ff4-9fe04df396d5"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nível]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="426" y="0" width="60" height="20" uuid="25f43e4a-8be5-43bb-b778-3eb3b4e6b3e0"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Série]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="0" width="70" height="20" uuid="78916f23-e7c2-483b-9c88-5f821b4e18d9"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Disciplina]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="550" y="0" width="60" height="20" uuid="4e83d2cc-80da-4290-a703-62fb6f66a2bb"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Acertos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="630" y="0" width="60" height="20" uuid="c561e397-7d7f-4940-97c1-9a5da6df132e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nota]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="700" y="0" width="120" height="30" uuid="7429cfc8-de86-42c8-9099-67aec2ea8aea"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Data da Conferência]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="0292ae0d-761e-46f0-b14e-719e856090f4"/>
+				<textFieldExpression><![CDATA[$F{MATRICULA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="80" y="0" width="286" height="20" uuid="f2452c98-9c4b-4962-9967-2132158a1e1d"/>
+				<textFieldExpression><![CDATA[$F{aluno}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="366" y="0" width="60" height="20" uuid="8c7190ed-65d6-4cec-bbc8-20251f7edfcf"/>
+				<textFieldExpression><![CDATA[$F{nivel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="426" y="0" width="60" height="20" uuid="f7f09920-faff-449b-956b-822a48835b10"/>
+				<textFieldExpression><![CDATA[$F{SERIE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="480" y="0" width="70" height="20" uuid="a7f87d66-7ad3-47c4-b3bf-18736043508a"/>
+				<textFieldExpression><![CDATA[$F{DISCIPLINA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="550" y="0" width="80" height="20" uuid="7b47246c-9ca8-409c-9389-c8d673b91929"/>
+				<textFieldExpression><![CDATA[$F{ACERTOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="630" y="0" width="70" height="20" uuid="263f8b0f-4b18-4660-9426-b6f9af8ab449"/>
+				<textFieldExpression><![CDATA[$F{NOTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="700" y="0" width="100" height="20" uuid="cf592efc-6c52-48c1-a4e7-3f559d2464d5"/>
+				<textFieldExpression><![CDATA[$F{CONFERENCIA_DATA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<rectangle>
+				<reportElement x="6" y="2" width="800" height="1" uuid="56063289-87c3-43a3-b718-a8acfdb4318f"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineStyle="Solid"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="780" y="3" width="40" height="17" uuid="41589091-d458-4e30-a5ae-44bb9eb48e6a"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="3" width="128" height="17" uuid="e6770b8a-3fdb-4cb1-b91b-e808cc133e30"/>
+				<textElement>
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Developed by ALFO System]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -209,9 +209,9 @@ public class TelaNono extends javax.swing.JInternalFrame {
             while (rs.next()) {
 
                 lastid.add(rs.getString("IDNOTA"));
-                int theSize = lastid.size();
-                System.out.println(theSize);
-                System.out.println(lastid);
+                //int theSize = lastid.size();
+                //System.out.println(theSize);
+               // System.out.println(lastid);
                 //int lastid = rs.getInt("IDNOTA");
             }
         } catch (Exception e) {

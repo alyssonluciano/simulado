@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blank_A4_1" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="13b8e898-8d3b-4587-8b26-3054cc8414f8">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="dbconferencia"/>
+	<queryString language="SQL">
+		<![CDATA[select * from nota]]>
+	</queryString>
+	<field name="IDNOTA" class="java.lang.Integer"/>
+	<field name="MATRICULA" class="java.lang.Integer"/>
+	<field name="SIMULADO" class="java.lang.String"/>
+	<field name="DISCIPLINA" class="java.lang.String"/>
+	<field name="ACERTOS" class="java.lang.Integer"/>
+	<field name="NOTA" class="java.math.BigDecimal"/>
+	<field name="CONFERENCIA_DATA" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="119" splitType="Stretch">
+			<textField pattern="HH:mm">
+				<reportElement x="475" y="0" width="100" height="30" uuid="b50960ea-291e-452a-b9ee-ec7a3932502c"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="470" y="20" width="100" height="30" uuid="d84867c3-6a8f-4486-a707-ce9af0f76355"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="170" height="30" uuid="40cfe3fb-5919-46d2-8c89-300c679c5cdb"/>
+				<textElement>
+					<font fontName="Arial Black" size="18"/>
+				</textElement>
+				<text><![CDATA["Relatório teste"]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="1" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="20" uuid="1b8ae4c3-cc58-4460-bc6a-4ab0e86e1fa6"/>
+				<text><![CDATA[IDNOTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="1" width="100" height="19" uuid="8e75285f-9833-4b0e-9f38-b01a48f56ebe"/>
+				<text><![CDATA[MATRICULA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="140" y="-1" width="100" height="30" uuid="a0390746-850b-4bea-9072-e2ff96e52def"/>
+				<text><![CDATA[SIMULADO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="0" width="100" height="30" uuid="9ea75b24-8b41-4f95-a25f-a65a1193210d"/>
+				<text><![CDATA[DISCIPLINA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="100" height="30" uuid="4ff20af1-bb76-4739-b5b4-1effac688723"/>
+				<text><![CDATA[ACERTOS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="390" y="-1" width="100" height="30" uuid="e6c9809b-3745-4a0a-a5e1-7a09f1323b5c"/>
+				<text><![CDATA[NOTA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="459" y="0" width="116" height="30" uuid="82d33df5-88a5-4224-9d12-f96f277fa8b7"/>
+				<text><![CDATA[CONFERENCIA_DATA]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="100" height="20" uuid="82c62b0a-3805-47c2-93ba-190df92f8b14"/>
+				<textFieldExpression><![CDATA[$F{IDNOTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="60" y="0" width="100" height="30" uuid="a26d3927-145f-4f31-9267-2cbf0c2f8187"/>
+				<textFieldExpression><![CDATA[$F{MATRICULA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="0" width="100" height="30" uuid="2e56154a-67d2-4a41-b272-a75ecb5f0c37"/>
+				<textFieldExpression><![CDATA[$F{SIMULADO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="0" width="80" height="30" uuid="82903109-a3ce-403c-9763-de339a431337"/>
+				<textFieldExpression><![CDATA[$F{DISCIPLINA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="0" width="50" height="30" uuid="26858a55-36a5-402f-b62f-ceed7454926d"/>
+				<textFieldExpression><![CDATA[$F{ACERTOS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="390" y="0" width="60" height="30" uuid="d6adb098-15bb-4f96-88fa-d55da1230bf7"/>
+				<textFieldExpression><![CDATA[$F{NOTA}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="0" width="100" height="30" uuid="38ecddf8-08c0-41ac-b3ec-248b6808dcc3"/>
+				<textFieldExpression><![CDATA[$F{CONFERENCIA_DATA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="80" splitType="Stretch">
+			<textField>
+				<reportElement x="470" y="50" width="100" height="30" uuid="801bc9f5-2624-42c8-b1b9-d07dc5e34fdd"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

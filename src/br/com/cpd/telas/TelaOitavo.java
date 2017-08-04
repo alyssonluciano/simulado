@@ -102,7 +102,7 @@ public class TelaOitavo extends javax.swing.JFrame {
 	}else if(rbSerie3.isSelected()){
 	    turma ="3";
 	}
-	System.out.println(turma);
+	//System.out.println(turma);
     }
 
     /**
