@@ -38,7 +38,7 @@ FROM aluno INNER JOIN nota on aluno.IDALUNO = nota.MATRICULA WHERE nota.SIMULADO
 				<textElement>
 					<font fontName="SansSerif" size="24" isBold="false"/>
 				</textElement>
-				<text><![CDATA[Relatório de Conferência de Simulado]]></text>
+				<text><![CDATA[Relatório de Correção de Simulado]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="361" y="41" width="70" height="39" uuid="34ad1fa3-3f8a-473d-8cdf-f6b1af2daee1"/>
