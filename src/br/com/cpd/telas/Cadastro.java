@@ -706,7 +706,17 @@ public class Cadastro extends javax.swing.JInternalFrame {
 	    txtMatricula.setText("");
 	    txtAluno9.setText("");
 	    txtNivel9.setText("");
-	    txtSturma9.setText("");	    
+	    txtSturma9.setText("");
+	    txtID.setText("");
+	txtMatricula.setEnabled(false);
+	txtAluno9.setEnabled(false);
+	txtNivel9.setEnabled(false);
+	txtSturma9.setEnabled(false);
+	txtDis.setEnabled(false);
+	txtNiveld.setEnabled(false);
+	txtQQ.setEnabled(false);
+	txtSturmad.setEnabled(false);
+	txtID.setEnabled(false);
     }//GEN-LAST:event_btnLimparActionPerformed
 
 
