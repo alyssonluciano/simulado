@@ -525,7 +525,7 @@ public class Cadastro extends javax.swing.JInternalFrame {
 	}   
     }
     public void inserir_dis(){	
-	String sql= "insert into disciplina (DISCIPLINA,QUANTIDADE_QUETÕES,nivel,serie)values (?,?,?,?)";
+	String sql= "insert into disciplina (DISCIPLINA,QUANTIDADE_QUESTÕES,nivel,serie)values (?,?,?,?)";
 	try {
 	    pst = conexao.prepareStatement(sql);
 	    pst.setString(1, txtDis.getText());
@@ -555,7 +555,7 @@ public class Cadastro extends javax.swing.JInternalFrame {
            
     }
     public void altera_dis(){
-    String sql  = "update disciplina set DISCIPLINA=?,QUANTIDADE_QUETÕES=?,nivel=?,serie=? where iddisciplina=?";
+    String sql  = "update disciplina set DISCIPLINA=?,QUANTIDADE_QUESTÕES=?,nivel=?,serie=? where iddisciplina=?";
     try {
 	    pst = conexao.prepareStatement(sql);	        
 	    pst.setString(1, txtDis.getText());

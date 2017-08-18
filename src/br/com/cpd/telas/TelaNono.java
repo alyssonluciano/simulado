@@ -53,6 +53,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
                 txtSturma9.setText(rs.getString(3));
                 txtNivel9.setText(rs.getString(4));
                 btnDisciplina.setEnabled(true);
+		
             } else {
                 btnDisciplina.setEnabled(false);
                 JOptionPane.showMessageDialog(null, "Aluno não encontrado !");
@@ -75,7 +76,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
     }
 
     private void carregar_disciplinas() {
-        String sql = "select DISCIPLINA,QUANTIDADE_QUETÕES from disciplina where serie = ?";
+        String sql = "select DISCIPLINA,QUANTIDADE_QUESTÕES from disciplina where serie = ?";
         try {
             pst = conexao.prepareStatement(sql);
             pst.setString(1, txtSturma9.getText());
@@ -569,7 +570,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 186, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -672,7 +673,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 227, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnApagar, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -724,6 +725,7 @@ public class TelaNono extends javax.swing.JInternalFrame {
     private void tblDisciplinasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDisciplinasMouseClicked
         // chamando metodo para carregar as caixas de texto
         setar_campos();
+	txtAcertos.requestFocus();
     }//GEN-LAST:event_tblDisciplinasMouseClicked
 
     private void txtAcertosKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAcertosKeyTyped

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.4.0.final using JasperReports Library version 6.4.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="conferencia" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" whenNoDataType="NoPages" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="c731a1a8-0756-4caa-96f2-7af05e0acf66">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="conferencia" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isSummaryNewPage="true" uuid="c731a1a8-0756-4caa-96f2-7af05e0acf66">
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w1" value="481"/>
 	<property name="com.jaspersoft.studio.data.sql.SQLQueryDesigner.sash.w2" value="519"/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="dbconferencia"/>
@@ -11,7 +11,7 @@
 	<queryString>
 		<![CDATA[SELECT nota.MATRICULA, aluno.aluno, aluno.nivel,aluno.SERIE,nota.DISCIPLINA, nota.ACERTOS, 
 nota.NOTA, nota.CONFERENCIA_DATA 
-FROM aluno INNER JOIN nota on aluno.IDALUNO = nota.MATRICULA WHERE nota.SIMULADO = $P{cbmSim} order by aluno.SERIE, nota.MATRICULA]]>
+FROM aluno INNER JOIN nota on aluno.IDALUNO = nota.MATRICULA WHERE nota.SIMULADO = $P{cbmSim}]]>
 	</queryString>
 	<field name="MATRICULA" class="java.lang.Integer"/>
 	<field name="aluno" class="java.lang.String"/>
@@ -28,9 +28,9 @@ FROM aluno INNER JOIN nota on aluno.IDALUNO = nota.MATRICULA WHERE nota.SIMULADO
 		<band height="8" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="86" splitType="Stretch">
+		<band height="80" splitType="Stretch">
 			<image>
-				<reportElement x="10" y="6" width="70" height="74" uuid="e8e22b4b-1670-4a21-9052-e5f6d9272672"/>
+				<reportElement x="10" y="-6" width="70" height="74" uuid="e8e22b4b-1670-4a21-9052-e5f6d9272672"/>
 				<imageExpression><![CDATA["C:/Users/Alysson/Documents/NetBeansProjects/conferenciasimulado/src/index_header_logoevl.png"]]></imageExpression>
 			</image>
 			<staticText>
@@ -48,21 +48,13 @@ FROM aluno INNER JOIN nota on aluno.IDALUNO = nota.MATRICULA WHERE nota.SIMULADO
 				<text><![CDATA[CPD]]></text>
 			</staticText>
 			<textField pattern="MMM d, yyyy">
-				<reportElement x="710" y="0" width="90" height="20" uuid="8d934c15-b992-4949-a675-3e1683bac298"/>
+				<reportElement x="732" y="5" width="90" height="20" uuid="8d934c15-b992-4949-a675-3e1683bac298"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField pattern="HH:mm">
-				<reportElement x="740" y="16" width="60" height="20" uuid="47c27a69-6391-4930-b9b2-ab972aa3554d"/>
+				<reportElement x="760" y="21" width="60" height="20" uuid="47c27a69-6391-4930-b9b2-ab972aa3554d"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="728" y="60" width="92" height="20" uuid="0a4c05a2-9a22-418e-8397-1afb1fed5d57"/>
-				<textFieldExpression><![CDATA[$P{cbmSim}]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="650" y="60" width="50" height="15" uuid="90d4384f-714f-4aa5-8cdd-ffd153b57d30"/>
-				<text><![CDATA[Simulado:]]></text>
-			</staticText>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -117,7 +109,7 @@ FROM aluno INNER JOIN nota on aluno.IDALUNO = nota.MATRICULA WHERE nota.SIMULADO
 				<text><![CDATA[Nota]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="700" y="0" width="122" height="30" uuid="7429cfc8-de86-42c8-9099-67aec2ea8aea"/>
+				<reportElement x="700" y="0" width="120" height="30" uuid="7429cfc8-de86-42c8-9099-67aec2ea8aea"/>
 				<textElement>
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -179,7 +171,7 @@ FROM aluno INNER JOIN nota on aluno.IDALUNO = nota.MATRICULA WHERE nota.SIMULADO
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="762" y="3" width="40" height="17" uuid="41589091-d458-4e30-a5ae-44bb9eb48e6a"/>
+				<reportElement x="780" y="3" width="40" height="17" uuid="41589091-d458-4e30-a5ae-44bb9eb48e6a"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -192,8 +184,6 @@ FROM aluno INNER JOIN nota on aluno.IDALUNO = nota.MATRICULA WHERE nota.SIMULADO
 		</band>
 	</pageFooter>
 	<summary>
-		<band splitType="Stretch">
-			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
-		</band>
+		<band height="42" splitType="Stretch"/>
 	</summary>
 </jasperReport>
